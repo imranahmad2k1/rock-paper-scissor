@@ -11,6 +11,10 @@
 		<button value="paper">Paper</button>
 		<button value="scissor">Scissor</button>
 
+		<div id="score">
+			<span id="playerScore"></span> - <span id="computerScore"></span>
+		</div>
+
 		<div id="result">
 			
 		</div>
@@ -30,6 +34,8 @@
 				(playerSelection == 'scissor' && computerSelection == 'paper')
 			){
 				result.textContent = `You Win! ${playerSelection} beats ${computerSelection}`;
+				playerScore++;
+				playerScoreDOM.textContent = playerScore;
 			}
 
 			else if(playerSelection == computerSelection){
@@ -38,17 +44,42 @@
 
 			else{
 				result.textContent = `You Lose! ${computerSelection} beats ${playerSelection}`;
+				computerScore++;
+				computerScoreDOM.textContent = computerScore;
 			}
+
+			if(playerScore == 5){
+				alert("You win the game!");
+				playerScore = computerScore = 0;
+			}
+			else if(computerScore == 5){
+				alert("You lost the game!");
+				playerScore = computerScore = 0;
+			}
+			playerScoreDOM.textContent = playerScore;
+			computerScoreDOM.textContent = computerScore;
+
 		}	
 
 		let buttons = document.querySelectorAll("button");
 		let result = document.querySelector("#result");
+		let playerScoreDOM = document.querySelector("#playerScore");
+		let computerScoreDOM = document.querySelector("#computerScore");
+		let playerScore = 0;
+		let computerScore = 0;
+
+		playerScoreDOM.textContent = playerScore;
+		computerScoreDOM.textContent = computerScore;
+
 		buttons.forEach((button) => {
 			button.addEventListener("click", function(){
 				let playersChoice = button.getAttribute('value');
 				playRound(playersChoice, getComputerChoice());
+			
 			});
 		});
+
+		
 	
 		</script>
 	</body>
