@@ -6,6 +6,14 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 	</head>
 	<body>
+
+		<button value="rock">Rock</button>
+		<button value="paper">Paper</button>
+		<button value="scissor">Scissor</button>
+
+		<div id="result">
+			
+		</div>
 	<script>
 		// random computer choice
 		function getComputerChoice(){
@@ -16,63 +24,32 @@
 	
 		// one round of rock paper scissor and return winner
 		function playRound(playerSelection, computerSelection){
-			if((playerSelection == 'rock' && computerSelection == 'scissor') || (playerSelection == 'paper' && computerSelection == 'rock') || (playerSelection == 'scissor' && computerSelection == 'paper')){
-				return `You Win! ${playerSelection} beats ${computerSelection}`
+			if(
+				(playerSelection == 'rock' && computerSelection == 'scissor') || 
+				(playerSelection == 'paper' && computerSelection == 'rock') || 
+				(playerSelection == 'scissor' && computerSelection == 'paper')
+			){
+				result.textContent = `You Win! ${playerSelection} beats ${computerSelection}`;
 			}
+
 			else if(playerSelection == computerSelection){
-				return 'Tie!'
+				result.textContent = 'Tie!';
 			}
+
 			else{
-				return `You Lose! ${computerSelection} beats ${playerSelection}`;
+				result.textContent = `You Lose! ${computerSelection} beats ${playerSelection}`;
 			}
-		}
+		}	
 
-		// one game has 5 rounds
-		function game(){
-			let playerScore = 0;
-			let computerScore = 0;
-			for(let i=0; i<5; i++){
-				// player choice
-				let playerSelection = prompt('Rock or Paper or Scissor?\n Your choice: ').toLowerCase();
-				while(!['rock','paper','scissor'].includes(playerSelection)){
-					console.log('Wrong value entered!');
-					playerSelection = prompt('Rock or Paper or Scissor\n Your choice: ').toLowerCase();
-				}
-
-				// computer choice
-				const computerSelection = getComputerChoice();
-
-				// playing one round
-				let status = playRound(playerSelection, computerSelection);
-
-				// keeping score
-				if(status == `You Win! ${playerSelection} beats ${computerSelection}`){
-					playerScore++;
-				}
-				else if(status == `You Lose! ${computerSelection} beats ${playerSelection}`){
-					computerScore++;
-				}
-
-				// output winner of round
-				console.log(status);
-			}
-
-			// calculating final score
-			if(playerScore>computerScore){
-				console.log("Congratulations! You win the game");
-				
-			}
-			else if(playerScore<computerScore){
-				console.log('You lost the game :(');
-			}
-			else{
-				console.log('Tie!');
-			}
-			console.log(`Final score ${playerScore} - ${computerScore}`);
-		}
-
-		game();
-
-	</script>
+		let buttons = document.querySelectorAll("button");
+		let result = document.querySelector("#result");
+		buttons.forEach((button) => {
+			button.addEventListener("click", function(){
+				let playersChoice = button.getAttribute('value');
+				playRound(playersChoice, getComputerChoice());
+			});
+		});
+	
+		</script>
 	</body>
 </html>
